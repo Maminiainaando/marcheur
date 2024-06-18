@@ -1,4 +1,3 @@
-import org.example.marcheur.Carte;
 import org.example.marcheur.Marcheur;
 import org.example.marcheur.Trajet;
 import org.junit.Test;
@@ -7,55 +6,40 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 public class MarcheTest {
     @Test
     public void resteImmobile() {
-        Carte carte=new Carte(Arrays.asList(
-                "marais",
-                "sekolintsika",
-                "hei",
-                Arrays.asList("balancoire","esti","boulevard","balancoire","hei"),
-                "pullman",
-                Arrays.asList("balancoire","esti","boulevard","balancoire","pullman"),
-                "nextA"
-        ));
         Marcheur bajni=new Marcheur();
         Trajet trajett=new Trajet();
         List<String> immobile=Arrays.asList("hei");
-        assertEquals(immobile,bajni.marche("hei","hei",carte));
+        assertEquals(immobile,bajni.marche("hei","hei"));
     }
     @Test
-    public void revenir(){
-        Carte carte=new Carte(Arrays.asList(
-                "marais",
-                "sekolintsika",
-                "hei",
-                Arrays.asList("balancoire","esti","boulevard","balancoire","hei"),
-                "pullman",
-                Arrays.asList("balancoire","esti","boulevard","balancoire","pullman"),
-                "nextA"
-        ));
+    public void EstiVersHei(){
         Marcheur bajni=new Marcheur();
         Trajet trajett=new Trajet();
-        List<String> immobile=Arrays.asList("pullman","hei","sekolintsika","marais");
-        assertEquals(immobile,bajni.marche("pullman","marais",carte));
+        List<String> immobile=Arrays.asList("esti","boulevard","balancoire","hei");
+        assertEquals(immobile,bajni.marche("esti","hei"));
     }
     @Test
-    public void continuerMarcher(){
-        Carte carte=new Carte(Arrays.asList(
-                "marais",
-                "sekolintsika",
-                "hei",
-                Arrays.asList("balancoire","esti","boulevard","balancoire","hei"),
-                "pullman",
-                Arrays.asList("balancoire","esti","boulevard","balancoire","pullman"),
-                "nextA"
-        ));
+    public void heiVersEsti(){
         Marcheur bajni=new Marcheur();
         Trajet trajett=new Trajet();
-        List<String> immobile=Arrays.asList("marais","sekolintsika","hei","pullman");
-        assertEquals(immobile,bajni.marche("marais","pullman",carte));
+        List<String> immobile=Arrays.asList("hei","balancoire","boulevard","esti");
+        assertEquals(immobile,bajni.marche("hei","esti"));
+    }
+    @Test
+    public void arriverAlaDestination(){
+        Marcheur bajni=new Marcheur();
+        Trajet trajett=new Trajet();
+        assertEquals("hei",(bajni.marche("hei","esti")).get(0));
+        assertEquals("esti",(bajni.marche("hei","esti")).get(bajni.marche("hei","esti").size()-1));
+    }
+    @Test
+    public void neSautePasUneLieu(){
+        Marcheur bajni=new Marcheur();
+        Trajet trajett=new Trajet();
+        List<String> immobile=Arrays.asList("marais","sekolintsika","hei");
+        assertEquals(immobile,bajni.marche("marais","hei"));
     }
 }

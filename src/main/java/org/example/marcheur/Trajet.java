@@ -4,31 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.example.carte.Carte;
 public class Trajet {
-  public List<String> marche(String depart,String destination,Carte carte) {
+  public List<String> marche(String depart,String destination) {
+    Carte carte=new Carte();
    List<String> result=new ArrayList<>();
-    List<String> originalList=Arrays.asList(
-            "marais",
-            "sekolintsika",
-            "hei",
-            "balancoire",
-            "esti",
-            "boulevard",
-            "balancoire",
-            "hei",
-            "pullman",
-            "balancoire",
-            "esti",
-            "boulevard",
-            "balancoire",
-            "pullman",
-            "nextA"
-    );
-
     List<String> heiPullman=Arrays.asList("balancoire","esti","boulevard","balancoire","hei","pullman");
     List<String> pullmanNextA=Arrays.asList("balancoire","esti","boulevard","balancoire","pullman","esti");
     List<String> stringList=new ArrayList<>();
-    for (Object object:carte.getCarte()) {
+    for (Object object:carte.getCarteObject()) {
       if(object instanceof String){
         stringList.add((String) object);
       }
@@ -75,15 +59,15 @@ public class Trajet {
         }
         }
       else {
-        int indexDepart= originalList.indexOf(depart);
-        int indexDestination= originalList.indexOf(destination);
+        int indexDepart= carte.getOriginalList().indexOf(depart);
+        int indexDestination=carte.getOriginalList().indexOf(destination);
         if(indexDepart<indexDestination) {
           for (int i = indexDepart; i <indexDestination ; i++) {
-            result.add(originalList.get(i));
+            result.add(carte.getOriginalList().get(i));
           }
         }else {
           for (int i = indexDepart; i >indexDestination ; i--) {
-            result.add(originalList.get(i));
+            result.add(carte.getOriginalList().get(i));
           }
         }
       }
