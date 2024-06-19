@@ -1,14 +1,11 @@
 package org.example.marcheur;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.*;
 import org.example.carte.Carte;
 public class Trajet {
   public List<String> marche(String depart,String destination) {
     Carte carte=new Carte();
-   List<String> result=new ArrayList<>();
+    List<String> result=new ArrayList<>();
     List<String> heiPullman=Arrays.asList("balancoire","esti","boulevard","balancoire","hei","pullman");
     List<String> pullmanNextA=Arrays.asList("balancoire","esti","boulevard","balancoire","pullman","esti");
     List<String> stringList=new ArrayList<>();
@@ -73,5 +70,14 @@ public class Trajet {
       }
       result.add(destination);
     return result;
+  }
+  public List<String> marcheSansCarte(String depart,String destination){
+        List<String> result=new ArrayList<>();
+    return result;
+  }
+
+  public static void main(String[] args) {
+    Marcheur marcheur=new Marcheur();
+    System.out.println(marcheur.marcheSansCarte("hei", "esti"));
   }
 }
