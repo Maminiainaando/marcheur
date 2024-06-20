@@ -1,10 +1,11 @@
 package org.example.marcheur_blanc;
 
+import javax.swing.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Method {
-    public static List<String> marche(Lieu depart, Lieu destination) {
+    public static List<String> marcheSansCarte(Lieu depart, Lieu destination) {
         Lieu hei = new Lieu("hei");
         Lieu sekolintsika = new Lieu("sekolintsika");
         Lieu marais = new Lieu("marais");
@@ -14,10 +15,14 @@ public class Method {
         Lieu boulevard = new Lieu("boulevard");
         Lieu nexta = new Lieu("nexta");
         List<Lieu> maraisHei = Arrays.asList(marais, sekolintsika, hei);
-
+        List<Lieu> estiBoulevard=Arrays.asList(esti,boulevard);
+        List<Lieu> estiBalancoire=Arrays.asList(esti,balancoire);
         List<Lieu> heiPullman=Arrays.asList(hei,pullman);
         List<Lieu> heiBalancoire=Arrays.asList(hei,balancoire);
         List<Lieu> heiMarais=Arrays.asList(hei,sekolintsika,marais);
+
+        List<Lieu> boulevardEsti = Arrays.asList(boulevard,esti);
+        List<Lieu> boulevardBalancoire = Arrays.asList(boulevard,balancoire);
 
         List<Lieu> pullmanHei = Arrays.asList(pullman,hei);
         List<Lieu> pullmanBalancoire = Arrays.asList(pullman,balancoire);
@@ -27,7 +32,26 @@ public class Method {
         List<Lieu> balancoireBoulevard = Arrays.asList(balancoire,boulevard);
         List<Lieu> balancoirePullman = Arrays.asList(balancoire,pullman);
         List<Lieu> balancoireHei = Arrays.asList(balancoire,hei);
-
+        Rue boues=new Rue(boulevardEsti);
+        List<String> bouesString = new ArrayList<>();
+        for (Lieu lieu : boues.getLieuList()) {
+            bouesString.add(lieu.getName());
+        }
+        Rue bouba=new Rue(boulevardBalancoire);
+        List<String> boubaString = new ArrayList<>();
+        for (Lieu lieu : bouba.getLieuList()) {
+            boubaString.add(lieu.getName());
+        }
+        Rue EBa=new Rue(estiBalancoire);
+        List<String> ebaString = new ArrayList<>();
+        for (Lieu lieu : EBa.getLieuList()) {
+            ebaString.add(lieu.getName());
+        }
+        Rue EBo=new Rue(estiBoulevard);
+        List<String> eboString = new ArrayList<>();
+        for (Lieu lieu : EBo.getLieuList()) {
+            eboString.add(lieu.getName());
+        }
         Rue andriatsioharana = new Rue(pullmanHei);
         List<String> andriatsioharanaString = new ArrayList<>();
         for (Lieu lieu : andriatsioharana.getLieuList()) {
@@ -92,99 +116,77 @@ public class Method {
 
         List<String> result = new ArrayList<>();
 
-        List<Rue> croisementPullman = Arrays.asList(ranaivo, PN, andriatsioharana);
+        List<Rue> croisementPullman = Arrays.asList(ranaivo,andriatsioharana);
         List<Rue> croisementBalancoire = Arrays.asList(BE, BB, BP, BH);
-        List<Rue> croisementHei = Arrays.asList(HB,HP,HM);
+        List<Rue> croisementHei = Arrays.asList(HB,HP);
 
         String stringDepart = depart.getName();
         String stringDestination = destination.getName();
 
         int indexDepart = avantLeChoixAleatoireString.indexOf(stringDepart);
         int indexDestination = avantLeChoixAleatoireString.indexOf(stringDestination);
-        if (avantLeChoixAleatoireString.contains(stringDepart))
-        {
-            if (avantLeChoixAleatoireString.contains(stringDestination)) {
+        if(avantLeChoixAleatoireString.contains(stringDepart) && avantLeChoixAleatoireString.contains(stringDestination)){
                 if (indexDepart < indexDestination) {
                     for (int i = indexDepart; i <= indexDestination; i++) {
-                        result.add(avantLeChoixAleatoireString.get(i));
-                        System.out.println(avantLeChoixAleatoireString.get(i));
+                            result.add(avantLeChoixAleatoireString.get(i));
                     }
-                } else {
-                    for (int i = indexDepart; i >= indexDestination; i--) {
-                        result.add(avantLeChoixAleatoireString.get(i));
-                    }
-                }
-            }
-            else {
-                for (int i = indexDepart; i <= avantLeChoixAleatoireString.size() - 1; i++) {
-                    result.add(avantLeChoixAleatoireString.get(i));
-                }
-            }
-        }
-        else if (stringDepart==stringDestination){
-            result.add(stringDepart);
-        }
-        do  {
-                if (result.get(result.size()-1).equals(pullman.getName()))
-                {
-                    Collections.shuffle(croisementPullman,new Random(System.nanoTime()));
-                    System.out.println(croisementPullman.get(0));
-                    result.add(croisementPullman.get(0).getLieuList().get(1).getName());
-                }
-
-                else if (result.get(result.size()-1).equals(balancoire.getName()))
-                {
-                    Collections.shuffle(croisementBalancoire,new Random(System.nanoTime()));
-                    System.out.println(croisementPullman.get(0));
-                    result.add(croisementBalancoire.get(0).getLieuList().get(1).getName());
-                }
-
-                else
-                {
-                    Collections.shuffle(croisementHei,new Random(System.nanoTime()));
-                    System.out.println(croisementPullman.get(0));
-                    if(croisementHei.get(0).getLieuList()==heiMarais){
-                        result.add(croisementHei.get(0).getLieuList().get(1).getName());
-                        result.add(croisementHei.get(0).getLieuList().get(2).getName());
-                    }else {
-                        result.add(croisementHei.get(0).getLieuList().get(1).getName());
-                    }
-                }
-
-        }
-        while (result.get(result.size()-1)!=destination.getName());
-
-
-        /*if(result.get(result.size()-1)!=destination.getName()){
-            if (result.get(result.size()-1)!=destination.getName()) {
-                if (result.get(result.size()-1).equals(pullman.getName())) {
-                    Collections.shuffle(croisementPullman,new Random(System.nanoTime()));
-                    result.add(croisementPullman.get(0).getLieuList().get(1).getName());
-                }
-
-                else if (result.get(result.size()-1).equals(balancoire.getName())) {
-                    Collections.shuffle(croisementBalancoire,new Random(System.nanoTime()));
-                    result.add(croisementBalancoire.get(0).getLieuList().get(1).getName());
-                }
-                else if (result.get(result.size()-1).equals(hei.getName())) {
-                    Collections.shuffle(croisementHei,new Random(System.nanoTime()));
-                    result.add(croisementHei.get(0).getLieuList().get(1).getName());
                 }
                 else {
-                    System.out.println("erreur");
+                    for (int i = indexDepart; i >= indexDestination; i--) {
+                            result.add(avantLeChoixAleatoireString.get(i));
+                    }
+                }
+        }
+        else {
+            for (int i = indexDepart; i <= avantLeChoixAleatoireString.size() - 1; i++) {
+                result.add(avantLeChoixAleatoireString.get(i));
+            }
+        }
+        do {
+            if(result.size()<=1 && stringDestination==stringDepart)
+            {
+              System.out.println("Reste immobile");
+              break;
+            }
+            else if (result.get(result.size()-1).equals(hei.getName()) && stringDestination.equals(hei.getName()))
+            {
+                System.out.println("stop");
+            }
+            else if(result.get(result.size()-1).equals(pullman.getName()))
+            {
+                if (stringDestination.equals(nexta.getName())) {
+                    result.add(PN.getLieuList().get(1).getName());
+                    break;
+                }
+                else {
+                    Collections.shuffle(croisementPullman, new Random(System.nanoTime()));
+                    if(stringDestination==croisementPullman.get(0).getLieuList().get(1).getName()){
+                        result.add(croisementPullman.get(0).getLieuList().get(1).getName());
+                        break;
+                    }else{
+                        result.add(croisementPullman.get(0).getLieuList().get(1).getName());
+                    }
                 }
             }
-            else{
-                System.out.println("immobile");
+            else if (result.get(result.size()-1).equals(balancoire.getName()))
+            {
+                Collections.shuffle(croisementBalancoire,new Random(System.nanoTime()));
+                if(stringDestination==croisementBalancoire.get(0).getLieuList().get(1).getName()){
+                    result.add(croisementBalancoire.get(0).getLieuList().get(1).getName());
+                    break;
+                }
+                else{
+                    result.add(croisementBalancoire.get(0).getLieuList().get(1).getName());
+                }
             }
-        }*/
+            else
+            {
+                Collections.shuffle(croisementHei,new Random(System.nanoTime()));
+                result.add(croisementHei.get(0).getLieuList().get(1).getName());
+            }
+        }
+        while (result.get(result.size() - 1)!=stringDestination);
 
         return result;
-    }
-    public static void main(String[] args) {
-        Marcheur marcheur=new Marcheur();
-        Lieu marais=new Lieu("hei");
-        Lieu pullman=new Lieu("esti");
-        System.out.println(marche(marais,pullman));
     }
 }
