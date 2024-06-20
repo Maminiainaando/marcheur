@@ -1,5 +1,6 @@
-import org.example.marcheur.Marcheur;
 import org.example.marcheur.Trajet;
+import org.example.marcheur_blanc.Lieu;
+import org.example.marcheur_blanc.Marcheur;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -9,37 +10,36 @@ import static org.junit.Assert.assertEquals;
 public class MarcheTest {
     @Test
     public void resteImmobile() {
+        Lieu depart= new Lieu("hei");
+        Lieu destination=new Lieu("hei");
         Marcheur bajni=new Marcheur();
-        Trajet trajett=new Trajet();
-        List<String> immobile=Arrays.asList("hei");
-        assertEquals(immobile,bajni.marche("hei","hei"));
-    }
-    @Test
-    public void EstiVersHei(){
-        Marcheur bajni=new Marcheur();
-        Trajet trajett=new Trajet();
-        List<String> immobile=Arrays.asList("esti","boulevard","balancoire","hei");
-        assertEquals(immobile,bajni.marche("esti","hei"));
+        List<String> immobile=Arrays.asList(depart.getName());
+        assertEquals(immobile,bajni.marcheSansCarte(depart,destination));
     }
     @Test
     public void heiVersEsti(){
         Marcheur bajni=new Marcheur();
-        Trajet trajett=new Trajet();
-        List<String> immobile=Arrays.asList("hei","balancoire","boulevard","esti");
-        assertEquals(immobile,bajni.marche("hei","esti"));
+        Lieu depart= new Lieu("hei");
+        Lieu destination=new Lieu("esti");
+        List<String> result=bajni.marcheSansCarte(depart,destination);
+        assertEquals(depart.getName(),result.get(0));
+        assertEquals(destination.getName(),result.get(result.size()-1));
     }
     @Test
     public void arriverAlaDestination(){
         Marcheur bajni=new Marcheur();
-        Trajet trajett=new Trajet();
-        assertEquals("hei",(bajni.marche("hei","esti")).get(0));
-        assertEquals("esti",(bajni.marche("hei","esti")).get(bajni.marche("hei","esti").size()-1));
+        Lieu depart= new Lieu("hei");
+        Lieu destination=new Lieu("nexta");
+        List<String> result=bajni.marcheSansCarte(depart,destination);
+        assertEquals(destination.getName(),result.get(result.size()-1));
     }
     @Test
     public void neSautePasUneLieu(){
         Marcheur bajni=new Marcheur();
-        Trajet trajett=new Trajet();
-        List<String> immobile=Arrays.asList("marais","sekolintsika","hei");
-        assertEquals(immobile,bajni.marche("marais","hei"));
+        Lieu depart= new Lieu("marais");
+        Lieu destination=new Lieu("hei");
+        Lieu sekolintsika=new Lieu("sekolintsika");
+        List<String> immobile=Arrays.asList(depart.getName(),sekolintsika.getName(),destination.getName());
+        assertEquals(immobile,bajni.marcheSansCarte(depart,destination));
     }
 }
